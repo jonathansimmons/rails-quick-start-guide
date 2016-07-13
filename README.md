@@ -6,6 +6,7 @@ A quick-start guide to getting a Ruby on Rails env setup on a mac.
 
 ## Index
 - [Ruby Management](#ruby-management)
+  - [RBENV](#rbenv)
   - [RVM](#rvm)
 - [Gem Management](#gem-management)
   - [Bundler](#bundler)
@@ -13,14 +14,28 @@ A quick-start guide to getting a Ruby on Rails env setup on a mac.
   - [MySql](#mysql)
   - [Postgres](#postgres)
   - [GUI Apps](gui-apps)
-- [Rack Server](#rack-server)
+- [Rails Server](#rails-server)
   - [Pow](#pow)
 
 
 ## Ruby Management
-Every Ruby on Rails app relies on a specific version of Ruby. The particular version depends on the time the Rails app was started and the dependencies it had at that time. Due to the vast array of Ruby versions it's common practice to use a Ruby Version Manager to maintain multiple ruby gemsets. My recommendation is [RVM](#rvm), it's been around the longest and is more full featured.
+Every Ruby on Rails app relies on a specific version of Ruby. The particular version depends on the time the Rails app was started and the dependencies it had at that time. Due to the vast array of Ruby versions it's common practice to use a Ruby Version Manager to maintain multiple ruby gemsets. My recommendation is [rbenv](https://github.com/rbenv/rbenv).
 
-For those interested [rbenv](https://github.com/rbenv/rbenv) is another option. Rbenv is largely the other side of the same coin, some prefer it as they think it take a simpler approach. In the end they each achieve the same goal of allowing you to manage multiple sets or grouping of gems locked in a specific version of ruby.
+For those interested [RVM](https://rvm.io/) is another option. RVM is largely the other side of the same coin, some prefer it as it has far more options and configurations but with configuration come complication as well. In the end they each achieve the same goal of allowing you to manage multiple sets or grouping of gems locked in a specific version of ruby.
+
+### [RBENV](https://github.com/rbenv/rbenv)
+
+#### Installation
+- Install rbenv via Homebrew: `brew install rbenv`.
+- Download a version of Ruby via rbenv (e.g., `rbenv install 2.2.3`). See <https://gorails.com/setup/osx/10.11-el-capitan>.
+- Make it the global version of Ruby: `rbenv global 2.2.3`.
+- It's that easy! For more info on how to use rbenv check out their [reamdme](https://github.com/rbenv/rbenv#how-it-works)
+
+*Installing and managing Ruby with rbenv allows us to specify versions of Ruby on a per-project basis. It also means we can avoid running sudo commands for installing gems and more as it's not affecting OS X's system Ruby.*
+
+#### Repo Configuration
+You can use a `.ruby-version` at the root directory of your repo to set the ruby version that rbenv should load for that repo.
+
 
 ### [RVM](https://rvm.io/)
 As they describe it: "RVM is a command-line tool which allows you to easily install, manage, and work with multiple ruby environments from interpreters to sets of gems."
@@ -182,7 +197,7 @@ As far as database management goes being able to visually see the data is a nece
   - [Navicat for Postgres](http://www.navicat.com/products/navicat-for-postgresql)
     - This is their lightweight Mysql only app. Most people that use Navicat do so because [Navicat Premium](http://www.navicat.com/products/navicat-premium) supports all database types. However $799 is a steep price and personally I don't like their UI.
 
-## Rake Server
+## Rails Server
 All rails apps can be run simply by running `rails s`. This can be cumbersome as well as lack support for features like subdomain support. To resolve this the rails team built a great app called [Pow](http://pow.cx)
 
 ### [Pow](http://pow.cx)
@@ -218,7 +233,12 @@ ln -s /path/to/myapp
 After you've don't this you should be able to go to http://myapp.dev and see your app running.
 
 #### Config Pow's Ruby version
-We want to be sure that pow is using the RVM ruby version out team specified in the project projects `.rvmc`. TO do this add a file named `pow.rc` at the application's root directory.
+Pow has great info on this at [their site](http://pow.cx/manual.html#section_2.3.1), but I'll outline the basics here:
+##### rbenv
+If you're using rbenv this is as easy as typing `rbenv local 2.3.1` where 2.3.1 is the ruby version for this repo. This will create a .ruby-version file that rbenv will look to and load the right ruby gemset.
+
+##### RVM
+RVm is a touch more complex than rbenv but still only a one time setup. We want to be sure that pow is using the RVM ruby version out team specified in the project projects `.rvmc`. TO do this add a file named `pow.rc` at the application's root directory.
 
 ```bash
 if [ -f "$rvm_path/scripts/rvm" ] && [ -f ".rvmrc" ]; then
